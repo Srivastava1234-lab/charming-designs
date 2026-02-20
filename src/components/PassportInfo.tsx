@@ -4,44 +4,54 @@ interface PassportInfoProps {
 
 const PassportInfo = ({ batteryImage }: PassportInfoProps) => {
   return (
-    <div className="p-8">
-      <div className="mb-5 rounded-xl bg-secondary p-5">
-        <label className="text-xs font-semibold uppercase tracking-wide text-foreground">
+    <div className="px-8 pb-4 pt-2">
+      {/* Passport ID */}
+      <div className="mb-6 rounded-xl border border-border bg-secondary px-5 py-4">
+        <label className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
           Passport ID
         </label>
-        <div className="mt-1 text-sm break-all text-foreground">
+        <div className="mt-1 font-mono text-sm text-foreground">
           bos-ag:battery-x.battery.pass:98906464-0226151
         </div>
       </div>
 
-      <div className="mb-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <div className="rounded-xl border-l-4 border-primary bg-card p-4">
-          <label className="text-xs font-semibold uppercase text-foreground">Battery Type</label>
-          <div className="mt-1 text-lg font-semibold text-foreground">12V Lithium</div>
+      {/* Info Cards */}
+      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="rounded-xl border border-border bg-secondary p-5">
+          <label className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+            Battery Type
+          </label>
+          <div className="mt-1.5 text-lg font-bold text-foreground">12V Lithium</div>
         </div>
-        <div className="rounded-xl border-l-4 border-primary bg-card p-4">
-          <label className="text-xs font-semibold uppercase text-foreground">Serial Number</label>
-          <div className="mt-1 text-lg font-semibold text-foreground">98906464-0226151</div>
+        <div className="rounded-xl border border-border bg-secondary p-5">
+          <label className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+            Serial Number
+          </label>
+          <div className="mt-1.5 text-lg font-bold text-foreground">98906464-0226151</div>
         </div>
       </div>
 
+      {/* Battery Image */}
       <div className="my-8 text-center">
         <img
           src={batteryImage}
           alt="Battery illustration"
           className="mx-auto max-w-full rounded-xl"
         />
-        <p className="mt-2 text-xs italic text-muted-foreground">
+        <p className="mt-3 text-xs text-muted-foreground">
           Image is for illustrative purposes only
         </p>
       </div>
 
-      <div className="mb-8 rounded-xl bg-secondary p-6 text-center">
-        <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-foreground">
+      {/* Economic Operator */}
+      <div className="mb-6 rounded-xl border border-border bg-secondary p-6 text-center">
+        <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
           Economic Operator
         </h3>
         <div className="text-2xl font-bold text-foreground">BOS AG</div>
-        <div className="mt-2 text-muted-foreground">https://www.bos-ag.com/</div>
+        <a href="https://www.bos-ag.com/" className="mt-2 inline-block text-sm text-primary hover:underline">
+          www.bos-ag.com
+        </a>
       </div>
     </div>
   );

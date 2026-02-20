@@ -17,8 +17,8 @@ const tabs = [
 ];
 
 const DetailRow = ({ label, value }: { label: string; value: string }) => (
-  <div className="border-b border-border py-5 last:border-b-0">
-    <div className="mb-1 font-semibold text-foreground">{label}</div>
+  <div className="border-b border-border py-4 last:border-b-0">
+    <div className="mb-0.5 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">{label}</div>
     <div className="text-[15px] text-foreground">{value}</div>
   </div>
 );
@@ -29,15 +29,15 @@ const LoginOverlay = ({ section }: { section: string }) => {
   return (
     <div>
       {!showForm ? (
-        <div className="my-10 rounded-xl border-2 border-dashed border-border bg-secondary/50 px-10 py-16 text-center">
-          <Lock className="mx-auto mb-5 h-12 w-12 text-muted-foreground" />
-          <h3 className="mb-2 text-xl font-semibold text-foreground">Authentication Required</h3>
-          <p className="mb-6 text-muted-foreground">
+        <div className="my-8 rounded-xl border border-border bg-secondary px-10 py-16 text-center">
+          <Lock className="mx-auto mb-5 h-10 w-10 text-muted-foreground" />
+          <h3 className="mb-2 text-lg font-bold text-foreground">Authentication Required</h3>
+          <p className="mb-6 text-sm text-muted-foreground">
             Please log in to access {section} information
           </p>
           <button
             onClick={() => setShowForm(true)}
-            className="rounded-lg bg-primary px-8 py-3 text-[15px] font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5 hover:shadow-lg"
+            className="rounded-full border border-primary bg-primary px-8 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
           >
             Login to View
           </button>
@@ -45,26 +45,26 @@ const LoginOverlay = ({ section }: { section: string }) => {
       ) : (
         <div className="mx-auto my-5 max-w-sm rounded-xl border border-border bg-secondary p-8">
           <div className="mb-5 text-left">
-            <label className="mb-2 block text-sm font-semibold text-foreground">Email</label>
+            <label className="mb-2 block text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Email</label>
             <input
               type="email"
-              className="w-full rounded-md border border-border bg-card px-4 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+              className="w-full rounded-lg border border-border bg-card px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             />
           </div>
           <div className="mb-5 text-left">
-            <label className="mb-2 block text-sm font-semibold text-foreground">Password</label>
+            <label className="mb-2 block text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Password</label>
             <input
               type="password"
-              className="w-full rounded-md border border-border bg-card px-4 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+              className="w-full rounded-lg border border-border bg-card px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             />
           </div>
           <div className="mt-6 flex gap-3">
-            <button className="flex-1 rounded-md bg-primary px-4 py-3 font-semibold text-primary-foreground">
+            <button className="flex-1 rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90">
               Submit
             </button>
             <button
               onClick={() => setShowForm(false)}
-              className="flex-1 rounded-md bg-secondary px-4 py-3 font-semibold text-foreground"
+              className="flex-1 rounded-full border border-border px-4 py-2.5 text-sm font-semibold text-foreground hover:bg-secondary"
             >
               Cancel
             </button>
@@ -77,7 +77,7 @@ const LoginOverlay = ({ section }: { section: string }) => {
 
 const GeneralTab = () => (
   <div>
-    <h2 className="mb-5 text-xl font-bold text-foreground">General</h2>
+    <h2 className="mb-4 text-xl font-bold text-foreground">General</h2>
     <DetailRow label="Name" value="BOS-BATX-0604" />
     <DetailRow label="Manufactured on" value="April 2026" />
     <DetailRow label="Facility Address" value="Industriestraße 12, 89081 Ulm, Germany" />
@@ -90,7 +90,7 @@ const GeneralTab = () => (
 
 const MaterialsTab = () => (
   <div>
-    <h2 className="mb-5 text-xl font-bold text-foreground">Material Composition</h2>
+    <h2 className="mb-4 text-xl font-bold text-foreground">Material Composition</h2>
     <DetailRow label="Battery chemistry" value="Lithium Iron Phosphate (LiFePO₄)" />
     <DetailRow label="Critical raw materials" value="Lithium, Phosphorus, Graphite, Copper, Aluminum" />
     <DetailRow label="Cathode Material" value="Lithium Iron Phosphate (LiFePO₄)" />
@@ -103,7 +103,7 @@ const MaterialsTab = () => (
 
 const PerformanceTab = () => (
   <div>
-    <h2 className="mb-5 text-xl font-bold text-foreground">Performance</h2>
+    <h2 className="mb-4 text-xl font-bold text-foreground">Performance</h2>
     <DetailRow label="Rated capacity" value="180 Ah" />
     <DetailRow label="Maximum voltage" value="14.6 V" />
     <DetailRow label="Minimum voltage" value="11.2 V" />
@@ -116,27 +116,27 @@ const PerformanceTab = () => (
 
 const CircularityTab = () => (
   <div>
-    <h2 className="mb-5 text-xl font-bold text-foreground">Circularity</h2>
-    <div className="border-b border-border py-5">
-      <div className="mb-1 font-semibold text-foreground">Circularity information</div>
-      <div className="mt-2 text-muted-foreground">🔗 <u>External link</u></div>
+    <h2 className="mb-4 text-xl font-bold text-foreground">Circularity</h2>
+    <div className="border-b border-border py-4">
+      <div className="mb-0.5 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Circularity information</div>
+      <div className="mt-2 text-sm text-primary hover:underline cursor-pointer">🔗 External link</div>
     </div>
-    <div className="border-b border-border py-5">
-      <div className="mb-1 font-semibold text-foreground">Recycled and renewable content</div>
-      <div className="mt-2 text-muted-foreground">🔗 <u>External link</u></div>
+    <div className="border-b border-border py-4">
+      <div className="mb-0.5 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Recycled and renewable content</div>
+      <div className="mt-2 text-sm text-primary hover:underline cursor-pointer">🔗 External link</div>
     </div>
-    <div className="py-5">
-      <div className="mb-1 font-semibold text-foreground">
-        Information on role of end-users in waste prevention and information on battery collection, preparation
+    <div className="py-4">
+      <div className="mb-0.5 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+        Information on role of end-users in waste prevention
       </div>
-      <div className="mt-2 text-muted-foreground">🔗 <u>External link</u></div>
+      <div className="mt-2 text-sm text-primary hover:underline cursor-pointer">🔗 External link</div>
     </div>
   </div>
 );
 
 const CarbonTab = () => (
   <div>
-    <h2 className="mb-5 text-xl font-bold text-foreground">Carbon Footprint</h2>
+    <h2 className="mb-4 text-xl font-bold text-foreground">Carbon Footprint</h2>
     <DetailRow label="Battery Carbon Footprint per Functional Unit" value="161.45 kgCO2e/kWh" />
     <DetailRow label="Contribution of raw material acquisition and pre-processing lifecycle stage" value="10.2 kgCO2e/kWh" />
     <DetailRow label="Contribution of main product production/manufacturing lifecycle stage" value="165.25 kgCO2e/kWh" />
@@ -163,14 +163,14 @@ const PassportTabs = ({ activeTab, onTabChange }: PassportTabsProps) => {
 
   return (
     <div>
-      <div className="flex overflow-x-auto border-b-2 border-border px-4 sm:px-10">
+      <div className="flex overflow-x-auto border-b border-border px-4 sm:px-8">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
-            className={`-mb-[2px] whitespace-nowrap border-b-[3px] px-4 py-5 text-sm font-semibold transition-all sm:px-7 sm:text-base ${
+            className={`-mb-px whitespace-nowrap border-b-2 px-4 py-4 text-sm font-medium transition-all sm:px-6 ${
               activeTab === tab.id
-                ? "border-foreground text-foreground"
+                ? "border-primary text-primary"
                 : "border-transparent text-muted-foreground hover:text-foreground"
             }`}
           >
