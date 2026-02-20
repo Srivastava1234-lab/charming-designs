@@ -4,57 +4,66 @@ interface PassportInfoProps {
 
 const PassportInfo = ({ batteryImage }: PassportInfoProps) => {
   return (
-    <div className="px-8 pb-4 pt-2">
+    <div className="p-6 sm:p-8">
       {/* Passport ID */}
-      <div className="mb-6 rounded-xl border border-border bg-secondary px-5 py-4">
-        <label className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
-          Passport ID
-        </label>
-        <div className="mt-1 font-mono text-sm text-foreground">
+      <div className="rounded-xl bg-secondary/60 p-4">
+        <div className="flex items-center gap-2">
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+            Passport ID
+          </span>
+          <div className="h-px flex-1 bg-border/50" />
+        </div>
+        <div className="mt-2 font-mono text-sm tracking-wide text-foreground/80">
           bos-ag:battery-x.battery.pass:98906464-0226151
         </div>
       </div>
 
-      {/* Info Cards */}
-      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="rounded-xl border border-border bg-secondary p-5">
-          <label className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
-            Battery Type
-          </label>
-          <div className="mt-1.5 text-lg font-bold text-foreground">12V Lithium</div>
-        </div>
-        <div className="rounded-xl border border-border bg-secondary p-5">
-          <label className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
-            Serial Number
-          </label>
-          <div className="mt-1.5 text-lg font-bold text-foreground">98906464-0226151</div>
-        </div>
+      {/* Stat Cards */}
+      <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <StatCard label="Battery Type" value="12V Lithium" />
+        <StatCard label="Serial Number" value="98906464-0226151" />
+        <StatCard label="Weight" value="18.95 kg" />
       </div>
 
       {/* Battery Image */}
-      <div className="my-8 text-center">
-        <img
-          src={batteryImage}
-          alt="Battery illustration"
-          className="mx-auto max-w-full rounded-xl"
-        />
-        <p className="mt-3 text-xs text-muted-foreground">
-          Image is for illustrative purposes only
+      <div className="my-8 flex flex-col items-center">
+        <div className="relative">
+          <div className="absolute inset-0 rounded-2xl bg-primary/5 blur-2xl" />
+          <img
+            src={batteryImage}
+            alt="Battery illustration"
+            className="relative max-h-64 rounded-2xl object-contain"
+          />
+        </div>
+        <p className="mt-3 text-[11px] text-muted-foreground">
+          Illustrative purposes only
         </p>
       </div>
 
       {/* Economic Operator */}
-      <div className="mb-6 rounded-xl border border-border bg-secondary p-6 text-center">
-        <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+      <div className="rounded-xl bg-gradient-to-br from-secondary/80 to-secondary/40 p-6 text-center">
+        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
           Economic Operator
-        </h3>
-        <div className="text-2xl font-bold text-foreground">BOS AG</div>
-        <a href="https://www.bos-ag.com/" className="mt-2 inline-block text-sm text-primary hover:underline">
-          www.bos-ag.com
+        </span>
+        <div className="mt-2 text-xl font-bold text-foreground">BOS AG</div>
+        <a
+          href="https://www.bos-ag.com/"
+          className="mt-1 inline-block text-xs text-primary transition-colors hover:text-primary/80"
+        >
+          www.bos-ag.com ↗
         </a>
       </div>
     </div>
   );
 };
+
+const StatCard = ({ label, value }: { label: string; value: string }) => (
+  <div className="rounded-xl bg-secondary/60 p-4 transition-colors hover:bg-secondary/80">
+    <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+      {label}
+    </div>
+    <div className="mt-1.5 text-base font-semibold text-foreground">{value}</div>
+  </div>
+);
 
 export default PassportInfo;
