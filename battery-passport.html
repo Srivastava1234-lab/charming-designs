@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BOS Battery X — Battery Pass</title>
+  <meta name="description" content="Digital Battery Passport for BOS Battery X" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            success: '#166534',
+            warning: '#c2500a',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif; }
+    .tab-btn { transition: border-color 0.15s, color 0.15s; }
+    .login-btn { transition: transform 0.15s, box-shadow 0.15s; }
+    .login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+  </style>
+</head>
+<body class="min-h-screen bg-gray-100 p-5">
+
+  <div class="mx-auto max-w-[1200px] overflow-hidden rounded-2xl bg-white shadow-xl">
+
+    <!-- Header -->
+    <div class="bg-black px-8 py-10 text-center text-white">
+      <h1 class="mb-5 text-3xl font-bold">BOS Battery X</h1>
+      <div class="mt-4">
+        <div class="text-2xl font-bold">Battery Pass</div>
+        <div class="mt-5">
+          <span class="inline-block rounded-2xl bg-white px-5 py-2 text-sm font-semibold text-green-700">
+            ✓ Verified
+          </span>
+        </div>
+        <div class="mx-auto mt-3 max-w-xl rounded-xl bg-black border border-white/20 p-4 font-mono text-base">
+          13 FEBRUARY 2026
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Section -->
+    <div class="p-8">
+      <!-- Passport ID -->
+      <div class="mb-5 rounded-xl bg-gray-100 p-5">
+        <label class="text-xs font-semibold uppercase tracking-wide text-gray-800">Passport ID</label>
+        <div class="mt-1 text-sm break-all text-gray-800">
+          bos-ag:battery-x.battery.pass:98906464-0226151
+        </div>
+      </div>
+
+      <!-- Cards -->
+      <div class="mb-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
+        <div class="rounded-xl border-l-4 border-black bg-white shadow-sm p-4">
+          <label class="text-xs font-semibold uppercase text-gray-700">Battery Type</label>
+          <div class="mt-1 text-lg font-semibold text-gray-900">12V Lithium</div>
+        </div>
+        <div class="rounded-xl border-l-4 border-black bg-white shadow-sm p-4">
+          <label class="text-xs font-semibold uppercase text-gray-700">Serial Number</label>
+          <div class="mt-1 text-lg font-semibold text-gray-900">98906464-0226151</div>
+        </div>
+      </div>
+
+      <!-- Image -->
+      <div class="my-8 text-center">
+        <img
+          src="src/assets/battery-x.png"
+          alt="Battery illustration"
+          class="mx-auto max-w-full rounded-xl"
+          onerror="this.style.display='none'"
+        />
+        <p class="mt-2 text-xs italic text-gray-400">Image is for illustrative purposes only</p>
+      </div>
+
+      <!-- Economic Operator -->
+      <div class="mb-8 rounded-xl bg-gray-100 p-6 text-center">
+        <h3 class="mb-4 text-sm font-semibold uppercase tracking-wide text-gray-700">Economic Operator</h3>
+        <div class="text-2xl font-bold text-gray-900">BOS AG</div>
+        <div class="mt-2 text-gray-500">https://www.bos-ag.com/</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div>
+      <div class="flex overflow-x-auto border-b-2 border-gray-200 px-4 sm:px-10" id="tab-bar">
+        <!-- tabs injected by JS -->
+      </div>
+      <div class="p-8" id="tab-content">
+        <!-- content injected by JS -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="border-t border-gray-200 bg-white px-8 py-5 text-xs text-gray-400">
+      <div class="mb-4 rounded-sm border-l-4 border-orange-600 bg-gray-50 p-4 text-[11px] leading-relaxed text-gray-600">
+        <strong>Disclaimer:</strong> This battery pass demonstrator uses sample data for
+        demonstration purposes only, and no representations are made regarding its accuracy,
+        adequacy, completeness, legality, reliability, or usefulness. The data is not intended for
+        decision-making or commercial use.
+      </div>
+      <div class="text-center">
+        © 2026 <strong>BOS Battery Pass™</strong>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const tabs = [
+      { id: "general",      label: "General" },
+      { id: "materials",    label: "Material Composition" },
+      { id: "performance",  label: "Performance" },
+      { id: "compliance",   label: "Compliance" },
+      { id: "supply",       label: "Supply Chain" },
+      { id: "circularity",  label: "Circularity" },
+      { id: "carbon",       label: "Carbon Footprint" },
+    ];
+
+    let activeTab = "general";
+    // Track login form visibility per locked tab
+    const showForm = {};
+
+    function row(label, value) {
+      return `
+        <div class="border-b border-gray-200 py-5 last:border-b-0">
+          <div class="mb-1 font-semibold text-gray-900">${label}</div>
+          <div class="text-[15px] text-gray-800">${value}</div>
+        </div>`;
+    }
+
+    function linkRow(label) {
+      return `
+        <div class="border-b border-gray-200 py-5 last:border-b-0">
+          <div class="mb-1 font-semibold text-gray-900">${label}</div>
+          <div class="mt-2 text-gray-500">🔗 <u>External link</u></div>
+        </div>`;
+    }
+
+    const contents = {
+      general: `
+        <h2 class="mb-5 text-xl font-bold text-gray-900">General</h2>
+        ${row("Name", "BOS-BATX-0604")}
+        ${row("Manufactured on", "April 2026")}
+        ${row("Facility Address", "Industriestraße 12, 89081 Ulm, Germany")}
+        ${row("Manufactured By", "Balance of Storage Systems")}
+        ${row("Category", "Industrial Battery")}
+        ${row("Status", "Original")}
+        ${row("Weight", "18.95 kg")}`,
+
+      materials: `
+        <h2 class="mb-5 text-xl font-bold text-gray-900">Material Composition</h2>
+        ${row("Battery chemistry", "Lithium Iron Phosphate (LiFePO₄)")}
+        ${row("Critical raw materials", "Lithium, Phosphorus, Graphite, Copper, Aluminum")}
+        ${row("Cathode Material", "Lithium Iron Phosphate (LiFePO₄)")}
+        ${row("Anode Material", "Graphite")}
+        ${row("Electrolyte", "Lithium Salt in Organic Solvent")}
+        ${row("Hazardous substances", "None")}
+        ${row("Impact of substances", "None")}`,
+
+      performance: `
+        <h2 class="mb-5 text-xl font-bold text-gray-900">Performance</h2>
+        ${row("Rated capacity", "180 Ah")}
+        ${row("Maximum voltage", "14.6 V")}
+        ${row("Minimum voltage", "11.2 V")}
+        ${row("Nominal voltage", "12.8 V")}
+        ${row("Certified usable battery energy", "2304 Wh")}
+        ${row("Initial self-discharge rate", "0.5% per month")}
+        ${row("Internal resistance", "0.025 Ω")}`,
+
+      circularity: `
+        <h2 class="mb-5 text-xl font-bold text-gray-900">Circularity</h2>
+        ${linkRow("Circularity information")}
+        ${linkRow("Recycled and renewable content")}
+        ${linkRow("Information on role of end-users in waste prevention and information on battery collection, preparation")}`,
+
+      carbon: `
+        <h2 class="mb-5 text-xl font-bold text-gray-900">Carbon Footprint</h2>
+        ${row("Battery Carbon Footprint per Functional Unit", "161.45 kgCO2e/kWh")}
+        ${row("Contribution of raw material acquisition and pre-processing lifecycle stage", "10.2 kgCO2e/kWh")}
+        ${row("Contribution of main product production/manufacturing lifecycle stage", "165.25 kgCO2e/kWh")}
+        ${row("Contribution of distribution lifecycle stage", "8.4 kgCO2e/kWh")}
+        ${row("Contribution of end of life and recycling lifecycle stage", "7.8 kgCO2e/kWh")}
+        ${row("Carbon footprint performance class", "'A'")}
+        ${row("Absolute battery carbon footprint", "0.40 tCO2e")}`,
+    };
+
+    function loginOverlay(tabId, label) {
+      if (showForm[tabId]) {
+        return `
+          <div class="mx-auto my-5 max-w-sm rounded-xl border border-gray-200 bg-gray-50 p-8">
+            <div class="mb-5 text-left">
+              <label class="mb-2 block text-sm font-semibold text-gray-900">Email</label>
+              <input type="email" class="w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 focus:border-black focus:outline-none focus:ring-2 focus:ring-black/10" />
+            </div>
+            <div class="mb-5 text-left">
+              <label class="mb-2 block text-sm font-semibold text-gray-900">Password</label>
+              <input type="password" class="w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 focus:border-black focus:outline-none focus:ring-2 focus:ring-black/10" />
+            </div>
+            <div class="mt-6 flex gap-3">
+              <button class="flex-1 rounded-md bg-black px-4 py-3 font-semibold text-white">Submit</button>
+              <button onclick="hideForm('${tabId}')" class="flex-1 rounded-md bg-gray-200 px-4 py-3 font-semibold text-gray-800">Cancel</button>
+            </div>
+          </div>`;
+      }
+      return `
+        <div class="my-10 rounded-xl border-2 border-dashed border-gray-300 bg-gray-50/50 px-10 py-16 text-center">
+          <svg class="mx-auto mb-5 h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+          </svg>
+          <h3 class="mb-2 text-xl font-semibold text-gray-900">Authentication Required</h3>
+          <p class="mb-6 text-gray-500">Please log in to access ${label} information</p>
+          <button onclick="showLoginForm('${tabId}')"
+            class="login-btn rounded-lg bg-black px-8 py-3 text-[15px] font-semibold text-white">
+            Login to View
+          </button>
+        </div>`;
+    }
+
+    function getContent(tabId) {
+      if (tabId === "compliance") return loginOverlay("compliance", "Compliance");
+      if (tabId === "supply")     return loginOverlay("supply", "Supply Chain");
+      return contents[tabId] || contents.general;
+    }
+
+    function showLoginForm(tabId) {
+      showForm[tabId] = true;
+      renderContent();
+    }
+
+    function hideForm(tabId) {
+      showForm[tabId] = false;
+      renderContent();
+    }
+
+    function renderTabs() {
+      const bar = document.getElementById("tab-bar");
+      bar.innerHTML = tabs.map(t => `
+        <button
+          class="tab-btn -mb-[2px] whitespace-nowrap border-b-[3px] px-4 py-5 text-sm font-semibold sm:px-7 sm:text-base
+            ${activeTab === t.id
+              ? "border-black text-gray-900"
+              : "border-transparent text-gray-400 hover:text-gray-900"}"
+          onclick="switchTab('${t.id}')">
+          ${t.label}
+        </button>`).join("");
+    }
+
+    function renderContent() {
+      document.getElementById("tab-content").innerHTML = getContent(activeTab);
+    }
+
+    function switchTab(id) {
+      activeTab = id;
+      renderTabs();
+      renderContent();
+    }
+
+    // Expose to onclick handlers
+    window.switchTab = switchTab;
+    window.showLoginForm = showLoginForm;
+    window.hideForm = hideForm;
+
+    // Initial render
+    renderTabs();
+    renderContent();
+  </script>
+</body>
+</html>
