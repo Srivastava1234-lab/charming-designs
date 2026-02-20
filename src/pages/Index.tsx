@@ -9,8 +9,8 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState("general");
 
   return (
-    <div className="min-h-screen bg-background p-5">
-      <div className="mx-auto max-w-[1200px] overflow-hidden rounded-2xl bg-card shadow-xl">
+    <div className="dark min-h-screen bg-background p-4 sm:p-8">
+      <div className="mx-auto max-w-[1200px] overflow-hidden rounded-2xl bg-card shadow-2xl">
         <PassportHeader />
         <PassportInfo batteryImage={batteryImage} />
         <PassportTabs activeTab={activeTab} onTabChange={setActiveTab} />
